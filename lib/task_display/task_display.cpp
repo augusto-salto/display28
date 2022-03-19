@@ -26,8 +26,8 @@ void taskDisplay(void *pvParameters )
 
   // clear screen
   tft.fillScreen(TFT_BLUE);
-  tft.setCursor(84, 179);
-  tft.setTextSize(3);
+  tft.setCursor(110, 140);
+  tft.setTextSize(2);
   tft.print("OLA MUNDO!");
   // Draw button (this example does not use library Button class)
   redBtn();
