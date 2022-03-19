@@ -1,0 +1,8 @@
+#ifndef DEFINICOES_H
+#define DEFINICOES_H
+
+#define TASK_TEMPO_SIZE 1500
+#define TASK_DISPLAY_SIZE 3000
+
+
+#endif
