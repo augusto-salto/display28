@@ -3,6 +3,8 @@
 
 #define TASK_TEMPO_SIZE 1500
 #define TASK_DISPLAY_SIZE 3000
+#define TASK_TOUCH_BTN_SIZE 1000
 
+#define FORMAT_CALIBRATION 0
 
 #endif

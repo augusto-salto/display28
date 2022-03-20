@@ -11,6 +11,8 @@
 #include <SPI.h>
 #include <FS.h>
 #include <LittleFS.h> 
+#include <task_btn_display.h>
+#include <calibrate.h>
 
 
 #define CALIBRATION_FILE "/TouchCalData3"
@@ -44,12 +46,12 @@
 #define GREENBUTTON_H FRAME_H
 
 
-    /////////////////
+extern TaskHandle_t handle_btn;
 
-    void greenBtn();
-    void redBtn();
-    void drawFrame();
-    void touch_calibrate();
+void greenBtn();
+void redBtn();
+void drawFrame();
+void touch_calibrate();
 
 
 void taskDisplay(void *pvParameters );
