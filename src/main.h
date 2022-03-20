@@ -10,11 +10,6 @@
     #include "task_tempo.h"
 
 
-   // #include <SPI.h>
-   // #include <FS.h>
-   // #include <LittleFS.h> 
-   // #include <TFT_eSPI.h>  
 
-    /////////////////
 
 #endif
