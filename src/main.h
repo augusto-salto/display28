@@ -1,5 +1,6 @@
 #ifndef MAIN_H
 #define MAIN_H
+#define _DISABLE_TLS_
 
     #include <Arduino.h>
     #include <WiFi.h>
@@ -15,6 +16,8 @@ QueueHandle_t xQueue_rain;
 QueueHandle_t xQueue_nivel;
 QueueHandle_t xQueue_dolar;
 QueueHandle_t xQueue_euro;
+QueueHandle_t xQueue_casos_covid;
+QueueHandle_t xQueue_mortes_covid;
 QueueHandle_t xQueue_time;
 QueueHandle_t xQueue_btn;
 

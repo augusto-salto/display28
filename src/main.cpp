@@ -47,10 +47,12 @@ void initializeQueue()
   xQueue_hum = xQueueCreate( 1, sizeof( int ) );
   xQueue_rain = xQueueCreate( 1, sizeof( int ) );
   xQueue_nivel = xQueueCreate( 1, sizeof( int ) );
-  xQueue_dolar = xQueueCreate( 1, sizeof( String ) );
-  xQueue_euro = xQueueCreate( 1, sizeof( String ) );
+  xQueue_dolar = xQueueCreate( 1, sizeof( float ) );
+  xQueue_euro = xQueueCreate( 1, sizeof( float ) );
   xQueue_time = xQueueCreate( 1, sizeof( String ) );
   xQueue_btn = xQueueCreate( 1, sizeof( u8_t ) );
+  xQueue_casos_covid = xQueueCreate( 1, sizeof( int ) );;
+  xQueue_mortes_covid = xQueueCreate( 1, sizeof( int ) );;
 
 }
 

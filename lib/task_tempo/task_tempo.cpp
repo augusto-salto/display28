@@ -8,12 +8,18 @@ int humidity = 0;
 int rainPossibility = 0;
 String dolarActualValue = "";
 String euroActualValue = "";
+float floatDolar = 0;
+float floatEuro = 0;
+int casosCovid = 0;
+int mortesCovid = 0;
 
 RestServer temp;
 RestServer hum;
 RestServer rain;
 RestServer euro;
 RestServer dolar;
+RestServer covid;
+RestServer coin;
 
 void taskTempo(void *pvParameters )
 {
@@ -21,41 +27,56 @@ void taskTempo(void *pvParameters )
     configTemp();
     configHumidity();
     configRain();
-    configEuro();
-    configDolar();
+    configCoin();
+    configCovid();
 
 
     
     while (1)
     {
-        temperature = temp.simpleRequest("main", "temp");
+        // ACTUAL CLIMATE
+        temperature = temp.simpleRequest(KEY_CLIMATE, VALUE_TEMP);
         xQueueOverwrite(xQueue_temp, (void *)&temperature);     
-        Serial.print("\nTEMPERATURE: ");
+        Serial.print("\n\nTEMPERATURE: ");
         Serial.print(temperature);
 
-        humidity = hum.simpleRequest("main", "humidity");
+        humidity = temp.simpleRequest(KEY_CLIMATE, VALUE_HUM);
         xQueueOverwrite(xQueue_hum, (void *)&humidity);     
         Serial.print("\nHUMIDITY: ");
         Serial.print(humidity);
 
-        rainPossibility = rain.arrayRequest("data", 0, "pop");
+        // RAIN PROBABILITY
+        rainPossibility = rain.arrayRequest(KEY_RAIN, INDEX_RAIN, VALUE_RAIN);
         xQueueOverwrite(xQueue_rain, (void *)&rainPossibility);     
         Serial.print("\nRAIN: ");
         Serial.print(rainPossibility);
 
-        euroActualValue = euro.stringRequest("EURBRL", "ask");
-        xQueueOverwrite(xQueue_rain, (void *)&euroActualValue);     
-        Serial.print("\nEURO: ");
-        Serial.print(euroActualValue);
+        // COIN 
+        euroActualValue = coin.stringRequest(KEY_EURO, VALUE_EURO);
+        floatEuro = euroActualValue.toFloat();
+        xQueueOverwrite(xQueue_rain, (void *)&floatEuro);     
+        Serial.print("\n\nEURO: ");
+        Serial.print(floatEuro);
 
-        dolarActualValue = dolar.stringRequest("USDBRL", "ask");
-        xQueueOverwrite(xQueue_rain, (void *)&dolarActualValue);     
+        dolarActualValue = coin.stringRequest(KEY_DOLAR, VALUE_DOLAR);
+        floatDolar = dolarActualValue.toFloat();
+        xQueueOverwrite(xQueue_rain, (void *)&floatDolar);     
         Serial.print("\nDOLAR: ");
-        Serial.print(euroActualValue);
+        Serial.print(floatDolar);
 
+        // COVID
+        casosCovid = covid.intHTTPSRequest(KEY_COVID, VALUE_CASOS);
+        xQueueOverwrite(xQueue_casos_covid, (void *)&casosCovid);   
+        Serial.print("\n\nCASOS COVID: ");
+        Serial.print(casosCovid);
+        
+        mortesCovid = covid.intHTTPSRequest(KEY_COVID, VALUE_DEATHS);
+        xQueueOverwrite(xQueue_mortes_covid, (void *)&mortesCovid); 
+        Serial.print("\nMORTES COVID: ");
+        Serial.print(mortesCovid);
         
 
-        vTaskDelay(pdMS_TO_TICKS(5000));
+        vTaskDelay(pdMS_TO_TICKS(10000));
     }
     
 }
@@ -92,12 +113,16 @@ void configRain()
 
 }
 
-void configEuro()
+void configCoin()
 {
-    euro.setServerName("http://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL");
+    coin.setServerName("https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL");
+    
 }
 
-void configDolar()
+
+
+void configCovid()
 {
-    dolar.setServerName("http://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL");
+    covid.setServerName("https://covid19-brazil-api.vercel.app/api/report/v1/brazil");
+    
 }

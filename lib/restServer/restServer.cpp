@@ -63,22 +63,56 @@ String RestServer::stringRequest(String key, String value)
 {
     String server_url;
 
+    if(this->_server_name.equals("")){
+        return "NAO INICIALIZADO!";
+    }
+    
+
     if(this->_api_key.equals("") || this->_country_code.equals(""))
     {
         this->_server_name.trim();
         server_url = this->_server_name;
         server_url.trim();
-       
+     
 
     } else 
     {
 
         server_url = this->_server_name + this->_city_name + this->_country_code + this->_api_key;
         server_url.trim();
-        
+      
          
     }
     
-    return getStringJsonRequest(server_url, key, value);
+    return getStringJsonRequestHTTPS(server_url, key, value);
+    
+}
+
+int RestServer::intHTTPSRequest(String key, String value)
+{
+    String server_url;
+
+    if(this->_server_name.equals("")){
+        return 999;
+    }
+    
+
+    if(this->_api_key.equals("") || this->_country_code.equals(""))
+    {
+        this->_server_name.trim();
+        server_url = this->_server_name;
+        server_url.trim();
+     
+
+    } else 
+    {
+
+        server_url = this->_server_name + this->_city_name + this->_country_code + this->_api_key;
+        server_url.trim();
+      
+         
+    }
+    
+    return getIntJsonRequestHTTPS(server_url, key, value);
     
 }

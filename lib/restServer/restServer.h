@@ -15,6 +15,7 @@ class RestServer{
         int simpleRequest(String  key, String value);
         int arrayRequest(String key, int index, String value);
         String stringRequest(String key, String value); 
+        int intHTTPSRequest(String key, String value);
 
     private:
         String _server_name = "";

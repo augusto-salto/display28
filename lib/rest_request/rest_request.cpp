@@ -1,5 +1,6 @@
 #include <rest_reques.h>
 
+
 String jsonBuffer;
 
 int getJsonRequest(String url, String key, String value, int index)
@@ -53,15 +54,42 @@ int getJsonRequest(String url, String key, String value)
         
 }   // end getJsonSimpleRequest
 
-String getStringJsonRequest(String url, String key, String value)
+String getStringJsonRequestHTTPS(String url, String key, String value)
 {
     String retorno;
-    jsonBuffer = httpGETRequest(url.c_str());
+    jsonBuffer = httpSGETRequest(url.c_str());
     JSONVar myObject2 = JSON.parse(jsonBuffer);
+    
+    /*Serial.print("JSONVARbuff");
+    Serial.print(jsonBuffer);
+    Serial.print("\n");*/
     
         if (JSON.typeof(myObject2) == "undefined") 
         {
+            Serial.print("JSON INDEFINIDO!");
             return "NULL";
+        }
+
+        
+        retorno = myObject2[key.c_str()][value.c_str()];
+        return retorno;
+        
+}  
+
+int getIntJsonRequestHTTPS(String url, String key, String value)
+{
+    int retorno;
+    jsonBuffer = httpSGETRequest(url.c_str());
+    JSONVar myObject2 = JSON.parse(jsonBuffer);
+    
+    /*Serial.print("JSONVARbuff");
+    Serial.print(jsonBuffer);
+    Serial.print("\n");*/
+    
+        if (JSON.typeof(myObject2) == "undefined") 
+        {
+            Serial.print("JSON INDEFINIDO!");
+            return 0;
         }
 
         
@@ -96,3 +124,29 @@ String httpGETRequest(const char* serverName)
         return payload;
 
 }   // end httpGETRequest
+
+String httpSGETRequest(const char* serverName) 
+{
+    WiFiClientSecure client;
+    HTTPClient http;
+    
+    client.setInsecure();
+    http.begin(client, serverName);
+    int httpResponseCode = http.GET();
+    String payload = "{}"; 
+  
+        if (httpResponseCode>0) 
+        {
+
+            payload = http.getString();
+
+        }else 
+        {
+
+        }
+
+        http.end();
+
+        return payload;
+
+}  
