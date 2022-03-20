@@ -9,9 +9,10 @@
     #include <TFT_eSPI.h> 
 
     extern TFT_eSPI tft;
+    extern QueueHandle_t xQueue_btn;
 
-void taskBtn(void *pvParameters );
-void taskBtnBegin();
+    void taskBtn(void *pvParameters );
+    void taskBtnBegin();
 
 
 
