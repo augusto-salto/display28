@@ -24,34 +24,18 @@
 
 
 
-// Comment out to stop drawing black spots
-//#define BLACK_SPOT
-
-// Switch position and size
-#define FRAME_X 100
-#define FRAME_Y 64
-#define FRAME_W 120
-#define FRAME_H 50
-
-// Red zone size
-#define REDBUTTON_X FRAME_X
-#define REDBUTTON_Y FRAME_Y
-#define REDBUTTON_W (FRAME_W/2)
-#define REDBUTTON_H FRAME_H
-
-// Green zone size
-#define GREENBUTTON_X (REDBUTTON_X + REDBUTTON_W)
-#define GREENBUTTON_Y FRAME_Y
-#define GREENBUTTON_W (FRAME_W/2)
-#define GREENBUTTON_H FRAME_H
 
 
 extern TaskHandle_t handle_btn;
 
-void greenBtn();
-void redBtn();
-void drawFrame();
-void touch_calibrate();
+extern QueueHandle_t xQueue_temp;
+extern QueueHandle_t xQueue_hum;
+extern QueueHandle_t xQueue_rain;
+extern QueueHandle_t xQueue_nivel;
+extern QueueHandle_t xQueue_dolar;
+extern QueueHandle_t xQueue_euro;
+extern QueueHandle_t xQueue_time;
+
 
 
 void taskDisplay(void *pvParameters );

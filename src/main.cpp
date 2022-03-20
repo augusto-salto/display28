@@ -7,7 +7,6 @@
 void setup() 
   {
    
-    //pinMode(LED_BUILTIN, OUTPUT);
     Serial.begin(115200);
     WiFi.begin("NINO", "ra201291");
 
@@ -19,7 +18,14 @@ void setup()
       vTaskDelay(pdMS_TO_TICKS(500));
     }
 
+    // INICIALIZAÇÃO DO RECURSOS DO FREERTOS
+    initializeQueue();
+    initializeSemaphore();
+
+    // INICIALIZAÇÃO DAS TAREFAS AUXILIARES
     taskTempoBegin();
+
+    // INICIALIZAÇÃO DO DISPLAY
     taskDisplayBegin();
 
 
@@ -28,7 +34,28 @@ void setup()
 
 void loop() 
   {
-     vTaskDelay(pdMS_TO_TICKS(5000));
+     vTaskDelay(pdMS_TO_TICKS(10));
   } // end loop
 
+
+
+
+void initializeQueue()
+{
+
+  xQueue_temp = xQueueCreate( 1, sizeof( int ) );
+  xQueue_hum = xQueueCreate( 1, sizeof( int ) );
+  xQueue_rain = xQueueCreate( 1, sizeof( int ) );
+  xQueue_nivel = xQueueCreate( 1, sizeof( int ) );
+  xQueue_dolar = xQueueCreate( 1, sizeof( int ) );
+  xQueue_euro = xQueueCreate( 1, sizeof( int ) );
+  xQueue_time = xQueueCreate( 1, sizeof( String ) );
+  xQueue_btn = xQueueCreate( 1, sizeof( u8_t ) );
+
+}
+
+void initializeSemaphore()
+{
+  xSerial_http_request = xSemaphoreCreateMutex();
+}
  
