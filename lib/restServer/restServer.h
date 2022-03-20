@@ -3,6 +3,8 @@
 
     #include <rest_reques.h>
 
+    #define APPID "&APPID="
+
 class RestServer{
 
     public:
@@ -10,8 +12,9 @@ class RestServer{
         void setApiKey(String api_key);
         void setCountryCode(String code);
         void setCityName(String city_name);
-        String simpleRequest(char key, char value);
-        String arrayRequest(char key, int index, char value);
+        int simpleRequest(String  key, String value);
+        int arrayRequest(String key, int index, String value);
+        String stringRequest(String key, String value); 
 
     private:
         String _server_name = "";

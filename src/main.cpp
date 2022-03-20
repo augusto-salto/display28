@@ -47,8 +47,8 @@ void initializeQueue()
   xQueue_hum = xQueueCreate( 1, sizeof( int ) );
   xQueue_rain = xQueueCreate( 1, sizeof( int ) );
   xQueue_nivel = xQueueCreate( 1, sizeof( int ) );
-  xQueue_dolar = xQueueCreate( 1, sizeof( int ) );
-  xQueue_euro = xQueueCreate( 1, sizeof( int ) );
+  xQueue_dolar = xQueueCreate( 1, sizeof( String ) );
+  xQueue_euro = xQueueCreate( 1, sizeof( String ) );
   xQueue_time = xQueueCreate( 1, sizeof( String ) );
   xQueue_btn = xQueueCreate( 1, sizeof( u8_t ) );
 
