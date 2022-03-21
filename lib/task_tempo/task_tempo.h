@@ -33,6 +33,7 @@ extern QueueHandle_t xQueue_dolar;
 extern QueueHandle_t xQueue_euro;
 extern QueueHandle_t xQueue_casos_covid;
 extern QueueHandle_t xQueue_mortes_covid;
+extern QueueHandle_t xQueue_notice;
 
 void taskTempo(void *pvParameters );
 void taskTempoBegin();
@@ -42,6 +43,7 @@ void configHumidity();
 void configRain();
 void configCoin();
 void configCovid();
+void configNewsNotices();
 
 
 

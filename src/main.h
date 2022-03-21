@@ -18,6 +18,7 @@ QueueHandle_t xQueue_dolar;
 QueueHandle_t xQueue_euro;
 QueueHandle_t xQueue_casos_covid;
 QueueHandle_t xQueue_mortes_covid;
+QueueHandle_t xQueue_notice;
 QueueHandle_t xQueue_time;
 QueueHandle_t xQueue_btn;
 

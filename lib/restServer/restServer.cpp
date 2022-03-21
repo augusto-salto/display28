@@ -88,6 +88,35 @@ String RestServer::stringRequest(String key, String value)
     
 }
 
+String RestServer::stringRequest(String key, int index, String value)
+{
+    String server_url;
+
+    if(this->_server_name.equals("")){
+        return "NAO INICIALIZADO!";
+    }
+    
+
+    if(this->_api_key.equals("") || this->_country_code.equals(""))
+    {
+        this->_server_name.trim();
+        server_url = this->_server_name;
+        server_url.trim();
+     
+
+    } else 
+    {
+
+        server_url = this->_server_name + this->_city_name + this->_country_code + this->_api_key;
+        server_url.trim();
+      
+         
+    }
+    
+    return getStringJsonRequestHTTPS(server_url, key, value, index);
+    
+}
+
 int RestServer::intHTTPSRequest(String key, String value)
 {
     String server_url;

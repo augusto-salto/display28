@@ -53,6 +53,7 @@ void initializeQueue()
   xQueue_btn = xQueueCreate( 1, sizeof( u8_t ) );
   xQueue_casos_covid = xQueueCreate( 1, sizeof( int ) );;
   xQueue_mortes_covid = xQueueCreate( 1, sizeof( int ) );;
+  xQueue_notice = xQueueCreate( 1, sizeof( String ) );
 
 }
 

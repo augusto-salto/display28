@@ -19,7 +19,7 @@ void taskBtn(void *pvParameters)
     Serial.print(y);
     Serial.print("\n");
   }
-        vTaskDelay(pdMS_TO_TICKS(10));
+        vTaskDelay(pdMS_TO_TICKS(100));
     }
     
 }

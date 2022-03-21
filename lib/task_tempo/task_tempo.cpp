@@ -12,14 +12,16 @@ float floatDolar = 0;
 float floatEuro = 0;
 int casosCovid = 0;
 int mortesCovid = 0;
+String notice = "";
 
 RestServer temp;
 RestServer hum;
 RestServer rain;
-RestServer euro;
-RestServer dolar;
 RestServer covid;
 RestServer coin;
+RestServer newsNotices;
+
+
 
 void taskTempo(void *pvParameters )
 {
@@ -29,6 +31,8 @@ void taskTempo(void *pvParameters )
     configRain();
     configCoin();
     configCovid();
+    configNewsNotices();
+
 
 
     
@@ -37,46 +41,53 @@ void taskTempo(void *pvParameters )
         // ACTUAL CLIMATE
         temperature = temp.simpleRequest(KEY_CLIMATE, VALUE_TEMP);
         xQueueOverwrite(xQueue_temp, (void *)&temperature);     
-        Serial.print("\n\nTEMPERATURE: ");
-        Serial.print(temperature);
+        //Serial.print("\n\nTEMPERATURE: ");
+        //Serial.print(temperature);
 
         humidity = temp.simpleRequest(KEY_CLIMATE, VALUE_HUM);
         xQueueOverwrite(xQueue_hum, (void *)&humidity);     
-        Serial.print("\nHUMIDITY: ");
-        Serial.print(humidity);
+        //Serial.print("\nHUMIDITY: ");
+        //Serial.print(humidity);
 
         // RAIN PROBABILITY
         rainPossibility = rain.arrayRequest(KEY_RAIN, INDEX_RAIN, VALUE_RAIN);
         xQueueOverwrite(xQueue_rain, (void *)&rainPossibility);     
-        Serial.print("\nRAIN: ");
-        Serial.print(rainPossibility);
+        //Serial.print("\nRAIN: ");
+        //Serial.print(rainPossibility);
 
         // COIN 
         euroActualValue = coin.stringRequest(KEY_EURO, VALUE_EURO);
         floatEuro = euroActualValue.toFloat();
-        xQueueOverwrite(xQueue_rain, (void *)&floatEuro);     
-        Serial.print("\n\nEURO: ");
-        Serial.print(floatEuro);
+        xQueueOverwrite(xQueue_euro, (void *)&floatEuro);     
+        //Serial.print("\n\nEURO: ");
+        //Serial.print(floatEuro);
 
         dolarActualValue = coin.stringRequest(KEY_DOLAR, VALUE_DOLAR);
         floatDolar = dolarActualValue.toFloat();
-        xQueueOverwrite(xQueue_rain, (void *)&floatDolar);     
-        Serial.print("\nDOLAR: ");
-        Serial.print(floatDolar);
+        xQueueOverwrite(xQueue_dolar, (void *)&floatDolar);     
+        //Serial.print("\nDOLAR: ");
+        //Serial.print(floatDolar);
 
         // COVID
         casosCovid = covid.intHTTPSRequest(KEY_COVID, VALUE_CASOS);
         xQueueOverwrite(xQueue_casos_covid, (void *)&casosCovid);   
-        Serial.print("\n\nCASOS COVID: ");
-        Serial.print(casosCovid);
+        //Serial.print("\n\nCASOS COVID: ");
+        //Serial.print(casosCovid);
         
         mortesCovid = covid.intHTTPSRequest(KEY_COVID, VALUE_DEATHS);
         xQueueOverwrite(xQueue_mortes_covid, (void *)&mortesCovid); 
-        Serial.print("\nMORTES COVID: ");
-        Serial.print(mortesCovid);
+        //Serial.print("\nMORTES COVID: ");
+        //Serial.print(mortesCovid);
+        
+        // NEWS NOTICES
+        notice = newsNotices.stringRequest("articles", 0, "title");
+        xQueueOverwrite(xQueue_notice, (void *)&notice); 
+        //Serial.print("\n\nNEW NOTICE: ");
+        //Serial.print(notice);
+        
         
 
-        vTaskDelay(pdMS_TO_TICKS(10000));
+        vTaskDelay(pdMS_TO_TICKS(TIME_REFRESH_REST_REQ));
     }
     
 }
@@ -125,4 +136,9 @@ void configCovid()
 {
     covid.setServerName("https://covid19-brazil-api.vercel.app/api/report/v1/brazil");
     
+}
+
+void configNewsNotices()
+{
+    newsNotices.setServerName("https://newsapi.org/v2/top-headlines?country=BR&category=science&pageSize=1&apiKey=008483d3e2ba4bd0a7efd28b393f83d1");
 }

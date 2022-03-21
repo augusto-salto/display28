@@ -17,6 +17,8 @@
 
 #define CALIBRATION_FILE "/TouchCalData3"
 
+#define MAXDELAY 100
+
 // Set REPEAT_CAL to true instead of false to run calibration
 // again, otherwise it will only be done once.
 // Repeat calibration if you change the screen rotation.
@@ -34,12 +36,18 @@ extern QueueHandle_t xQueue_rain;
 extern QueueHandle_t xQueue_nivel;
 extern QueueHandle_t xQueue_dolar;
 extern QueueHandle_t xQueue_euro;
+extern QueueHandle_t xQueue_casos_covid;
+extern QueueHandle_t xQueue_mortes_covid;
+extern QueueHandle_t xQueue_notice;
 extern QueueHandle_t xQueue_time;
+extern QueueHandle_t xQueue_btn;
+
 
 
 
 void taskDisplay(void *pvParameters );
 void taskDisplayBegin();
+void refreshValues();
 
 
 

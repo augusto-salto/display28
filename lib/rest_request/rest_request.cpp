@@ -76,6 +76,28 @@ String getStringJsonRequestHTTPS(String url, String key, String value)
         
 }  
 
+String getStringJsonRequestHTTPS(String url, String key, String value, int index)
+{
+    String retorno;
+    jsonBuffer = httpSGETRequest(url.c_str());
+    JSONVar myObject2 = JSON.parse(jsonBuffer);
+    
+    /*Serial.print("JSONVARbuff");
+    Serial.print(jsonBuffer);
+    Serial.print("\n");*/
+    
+        if (JSON.typeof(myObject2) == "undefined") 
+        {
+            Serial.print("JSON INDEFINIDO!");
+            return "NULL";
+        }
+
+        
+        retorno = myObject2[key.c_str()][index][value.c_str()];
+        return retorno;
+        
+}  
+
 int getIntJsonRequestHTTPS(String url, String key, String value)
 {
     int retorno;
