@@ -9,6 +9,8 @@
     #include "freertos/queue.h"
     #include "task_display.h"
     #include "task_tempo.h"
+    #include <task_ntp.h>
+
 
 QueueHandle_t xQueue_temp;
 QueueHandle_t xQueue_hum;
@@ -21,8 +23,11 @@ QueueHandle_t xQueue_mortes_covid;
 QueueHandle_t xQueue_notice;
 QueueHandle_t xQueue_time;
 QueueHandle_t xQueue_btn;
+QueueHandle_t xQueue_currentHours;
+QueueHandle_t xQueue_currentDate;
 
 SemaphoreHandle_t xSerial_http_request;
+SemaphoreHandle_t xTft_semaphore;
 
 void initializeQueue();
 void initializeSemaphore();

@@ -10,6 +10,7 @@
 
     extern TFT_eSPI tft;
     extern QueueHandle_t xQueue_btn;
+    extern SemaphoreHandle_t xTft_semaphore;
 
     void taskBtn(void *pvParameters );
     void taskBtnBegin();

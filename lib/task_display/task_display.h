@@ -17,7 +17,7 @@
 
 #define CALIBRATION_FILE "/TouchCalData3"
 
-#define MAXDELAY 100
+#define MAXDELAY 50
 
 // Set REPEAT_CAL to true instead of false to run calibration
 // again, otherwise it will only be done once.
@@ -41,8 +41,10 @@ extern QueueHandle_t xQueue_mortes_covid;
 extern QueueHandle_t xQueue_notice;
 extern QueueHandle_t xQueue_time;
 extern QueueHandle_t xQueue_btn;
+extern QueueHandle_t xQueue_currentHours;
+extern QueueHandle_t xQueue_currentDate;
 
-
+extern SemaphoreHandle_t xTft_semaphore;
 
 
 void taskDisplay(void *pvParameters );

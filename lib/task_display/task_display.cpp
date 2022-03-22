@@ -12,6 +12,8 @@ float dfloatEuro = 0;
 int dcasosCovid = 0;
 int dmortesCovid = 0;
 String dnotice = "Carregando...";
+String ddata = "";
+String dhora = "";
 
 void taskDisplay(void *pvParameters )
 {
@@ -31,23 +33,38 @@ void taskDisplay(void *pvParameters )
   #endif
 
 
-  tft.fillScreen(TFT_WHITE);
-  tft.setCursor(70, 130);
-  //tft.setTextDatum(5);
-  tft.setTextColor(TFT_BLACK);
+  tft.fillScreen(TFT_BLACK);
+  //tft.setCursor(70, 160);
   tft.setTextSize(2);
-  tft.print("PPP TECH");
- 
 
-  //taskBtnBegin();
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.drawCentreString("PPP TECH" , 120, 140, 2);
+  vTaskDelay(pdMS_TO_TICKS(500));
+  tft.setTextColor(TFT_YELLOW, TFT_BLACK);
+  tft.drawCentreString("PPP TECH" , 120, 140, 2);
+  vTaskDelay(pdMS_TO_TICKS(500));
+  tft.setTextColor(TFT_RED, TFT_BLACK);
+  tft.drawCentreString("PPP TECH" , 120, 140, 2);
+  vTaskDelay(pdMS_TO_TICKS(500));
+  tft.setTextColor(TFT_GREEN, TFT_BLACK);
+  tft.drawCentreString("PPP TECH" , 120, 140, 2);
+  vTaskDelay(pdMS_TO_TICKS(500));
+
+
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.fillScreen(TFT_BLACK);
+
+  taskBtnBegin();
 
     while (1)
     {
 
       refreshValues();
 
+    xSemaphoreTake(xTft_semaphore, portMAX_DELAY );  
+
       tft.setTextSize(2);
-      tft.fillScreen(TFT_WHITE);
+      //tft.fillScreen(TFT_WHITE);
       tft.setCursor(10, 10);
       tft.print("TEMPERATURA: ");
       tft.print(String(dtemperature));
@@ -66,19 +83,21 @@ void taskDisplay(void *pvParameters )
       tft.print(dfloatDolar);
 
       
-      tft.setCursor(10, 90);
-      tft.print("CASOS COVID: ");
-      tft.setTextSize(1.8);
-      tft.print(dcasosCovid);
+  
 
-      tft.setCursor(10, 120);
-      tft.setTextSize(2);
-      tft.print("MORTES COVID: ");
-      tft.setTextSize(1.8);
-      tft.print(dmortesCovid);
+    tft.drawLine(0, 130, 240, 130, TFT_YELLOW);
+
+    tft.drawCentreString(ddata, 120, 140, 1);
+    tft.drawCentreString(dhora, 120, 160, 1);
+
+    tft.drawLine(0, 180, 240, 180, TFT_YELLOW);
     
-      
-      vTaskDelay(pdMS_TO_TICKS(1000));
+      tft.drawCentreString("NIVEL AGUA: 100%", 120, 200, 2);
+    
+    
+    xSemaphoreGive(xTft_semaphore);  
+
+      vTaskDelay(pdMS_TO_TICKS(TIME_REFRESH_DISPLAY));
 
     }
     
@@ -124,6 +143,10 @@ void  refreshValues()
       
 
       xQueueReceive(xQueue_notice, (void *)&dnotice, MAXDELAY);  
+
+      xQueueReceive(xQueue_currentDate, (void *)&ddata, MAXDELAY);  
+
+      xQueueReceive(xQueue_currentHours, (void *)&dhora, MAXDELAY);  
       
 
 

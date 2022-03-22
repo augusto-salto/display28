@@ -25,6 +25,9 @@ void setup()
     // INICIALIZAÇÃO DAS TAREFAS AUXILIARES
     taskTempoBegin();
 
+    // INICIALIZAÇÃO DO RELOGIO
+    taskNtpBegin();
+
     // INICIALIZAÇÃO DO DISPLAY
     taskDisplayBegin();
 
@@ -54,11 +57,14 @@ void initializeQueue()
   xQueue_casos_covid = xQueueCreate( 1, sizeof( int ) );;
   xQueue_mortes_covid = xQueueCreate( 1, sizeof( int ) );;
   xQueue_notice = xQueueCreate( 1, sizeof( String ) );
+  xQueue_currentDate = xQueueCreate( 1, sizeof( String ) );
+  xQueue_currentHours = xQueueCreate( 1, sizeof( String ) );
 
 }
 
 void initializeSemaphore()
 {
   xSerial_http_request = xSemaphoreCreateMutex();
+  xTft_semaphore = xSemaphoreCreateMutex();
 }
  

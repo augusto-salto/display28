@@ -10,7 +10,8 @@ void taskBtn(void *pvParameters)
     {
           uint16_t x, y;
 
-  // See if there's any touch data for us
+  xSemaphoreTake(xTft_semaphore, portMAX_DELAY ); 
+  
   if (tft.getTouch(&x, &y))
   {
     Serial.print("\n(TASK BTN)COORDENADA X: ");
@@ -19,8 +20,12 @@ void taskBtn(void *pvParameters)
     Serial.print(y);
     Serial.print("\n");
   }
-        vTaskDelay(pdMS_TO_TICKS(100));
-    }
+
+  xSemaphoreGive(xTft_semaphore);  
+
+
+      vTaskDelay(pdMS_TO_TICKS(100));
+  }
     
 }
 
