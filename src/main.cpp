@@ -27,7 +27,7 @@ void setup()
 
     // INICIALIZAÇÃO DO RELOGIO
     taskNtpBegin();
-
+    taskFirebaseBegin();
     // INICIALIZAÇÃO DO DISPLAY
     taskDisplayBegin();
 
@@ -59,6 +59,9 @@ void initializeQueue()
   xQueue_notice = xQueueCreate( 1, sizeof( String ) );
   xQueue_currentDate = xQueueCreate( 1, sizeof( String ) );
   xQueue_currentHours = xQueueCreate( 1, sizeof( String ) );
+  xQueue_nivel = xQueueCreate( 1, sizeof( int ) );;
+  xQueue_total = xQueueCreate( 1, sizeof( int ) );;
+  xQueue_vazao = xQueueCreate( 1, sizeof( float ) );;
 
 }
 

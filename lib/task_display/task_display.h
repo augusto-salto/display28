@@ -43,6 +43,9 @@ extern QueueHandle_t xQueue_time;
 extern QueueHandle_t xQueue_btn;
 extern QueueHandle_t xQueue_currentHours;
 extern QueueHandle_t xQueue_currentDate;
+extern QueueHandle_t xQueue_nivel;
+extern QueueHandle_t xQueue_total;
+extern QueueHandle_t xQueue_vazao;
 
 extern SemaphoreHandle_t xTft_semaphore;
 

@@ -11,10 +11,14 @@
         "dhora",
         "dhumidity",
         "dmortes",
+        "dnivel",
         "dnotice",
         "dtemperature",
+        "dtotal",
+        "dvazao",
         "essa",
         "fazer",
+        "fbdo",
         "FREQATUALIZADISPLAY",
         "Funcao",
         "HUMIDADE",
@@ -28,6 +32,7 @@
         "reservada",
         "Tamanho",
         "TAREFAS",
-        "TEMPERATURA"
+        "TEMPERATURA",
+        "Vazao"
     ]
 }

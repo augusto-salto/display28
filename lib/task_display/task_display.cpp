@@ -14,6 +14,9 @@ int dmortesCovid = 0;
 String dnotice = "Carregando...";
 String ddata = "";
 String dhora = "";
+int dnivel = 0;
+int dtotal = 0;
+float dvazao = 0;
 
 void taskDisplay(void *pvParameters )
 {
@@ -82,6 +85,9 @@ void taskDisplay(void *pvParameters )
       tft.print("DOLAR: R$");
       tft.print(dfloatDolar);
 
+      tft.setCursor(10, 90);
+      tft.print("CHUVA: ");
+      tft.print(drainPossibility);
       
   
 
@@ -91,11 +97,23 @@ void taskDisplay(void *pvParameters )
     tft.drawCentreString(dhora, 120, 160, 1);
 
     tft.drawLine(0, 180, 240, 180, TFT_YELLOW);
+
+    tft.drawCentreString("NIVEL: " + String(dnivel), 120, 200, 1);
+    tft.drawCentreString("TOTAL: " + String(dtotal), 120, 220, 1);
+    tft.drawCentreString("VAZAO: " + String(dvazao), 120, 240, 1);
     
-      tft.drawCentreString("NIVEL AGUA: 100%", 120, 200, 2);
+    tft.drawCentreString("NIVEL AGUA: 100%", 120, 200, 2);
     
     
     xSemaphoreGive(xTft_semaphore);  
+
+     Serial.print("\nNIVEL: ");
+        Serial.print(dnivel);
+        Serial.print("\nCONSUMO: ");
+        Serial.print(dtotal);
+        Serial.print("\nVAZAO: ");
+        Serial.print(dvazao);
+
 
       vTaskDelay(pdMS_TO_TICKS(TIME_REFRESH_DISPLAY));
 
@@ -124,30 +142,29 @@ void  refreshValues()
 {
       xQueueReceive(xQueue_temp, (void *)&dtemperature, MAXDELAY);
       
-
       xQueueReceive(xQueue_hum, (void *)&dhumidity, MAXDELAY);
-      
 
       xQueueReceive(xQueue_rain, (void *)&drainPossibility, MAXDELAY);
-      
 
       xQueueReceive(xQueue_euro, (void *)&dfloatEuro, MAXDELAY);
      
       xQueueReceive(xQueue_dolar, (void *)&dfloatDolar, MAXDELAY);
       
-      
       xQueueReceive(xQueue_casos_covid, (void *)&dcasosCovid, MAXDELAY);
-      
 
       xQueueReceive(xQueue_mortes_covid, (void *)&dmortesCovid, MAXDELAY);
       
-
       xQueueReceive(xQueue_notice, (void *)&dnotice, MAXDELAY);  
 
       xQueueReceive(xQueue_currentDate, (void *)&ddata, MAXDELAY);  
 
       xQueueReceive(xQueue_currentHours, (void *)&dhora, MAXDELAY);  
       
+      xQueueReceive(xQueue_nivel, (void *)&dnivel, MAXDELAY); 
+
+      xQueueReceive(xQueue_total, (void *)&dtotal, MAXDELAY);   
+
+      xQueueReceive(xQueue_vazao, (void *)&dvazao, MAXDELAY);  
 
 
       #if DEBUG_QUEUE_VALUES_AT_DISPLAY == 1
