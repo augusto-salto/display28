@@ -7,15 +7,25 @@ void task_ntp(void *pvParameters)
 
     String data;
     String hora;
+    String lastHora;
     initRelogio();
 
     while (1)
     {
 
         data = getDate();
-        hora = getTime();    
+        lastHora = getTime();  
         xQueueOverwrite(xQueue_currentDate, (void * )&data);
-        xQueueOverwrite(xQueue_currentHours, (void *)&hora);
+
+        if(!lastHora.equals(hora))
+        {
+            hora = lastHora;    
+            Serial.print("\nLAST HORA: ");
+            Serial.print(lastHora);
+            xQueueSend(xQueue_currentHours, &hora, 100);
+        }
+        //xQueueOverwrite(xQueue_currentHours, (void *)&hora);
+        
         vTaskDelay(pdMS_TO_TICKS(TIME_REFRESH_NTP));
 
     }
