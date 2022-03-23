@@ -16,7 +16,7 @@ void task_ntp(void *pvParameters)
         hora = getTime();    
         xQueueOverwrite(xQueue_currentDate, (void * )&data);
         xQueueOverwrite(xQueue_currentHours, (void *)&hora);
-        vTaskDelay(pdMS_TO_TICKS(800));
+        vTaskDelay(pdMS_TO_TICKS(TIME_REFRESH_NTP));
 
     }
     
