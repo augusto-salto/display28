@@ -88,31 +88,29 @@ void taskDisplay(void *pvParameters )
       tft.setCursor(10, 90);
       tft.print("CHUVA: ");
       tft.print(drainPossibility);
-      
+      tft.print("%");
   
 
-    tft.drawLine(0, 130, 240, 130, TFT_YELLOW);
+    tft.drawLine(0, 125, 240, 125, TFT_YELLOW);
 
     tft.drawCentreString(ddata, 120, 140, 1);
     tft.drawCentreString(dhora, 120, 160, 1);
 
-    tft.drawLine(0, 180, 240, 180, TFT_YELLOW);
+    tft.drawLine(0, 185, 240, 185, TFT_YELLOW);
 
-    tft.drawCentreString("NIVEL: " + String(dnivel), 120, 200, 1);
-    tft.drawCentreString("TOTAL: " + String(dtotal), 120, 220, 1);
-    tft.drawCentreString("VAZAO: " + String(dvazao), 120, 240, 1);
+    tft.setTextColor(TFT_GREENYELLOW, TFT_BLACK);
+    tft.drawCentreString("CAIXA AGUA", 120, 200, 1);
+    tft.setTextColor(TFT_WHITE, TFT_BLACK);
     
-    tft.drawCentreString("NIVEL AGUA: 100%", 120, 200, 2);
+    tft.drawCentreString("NIVEL: " + String(dnivel) + "%", 120, 240, 1);
+    tft.drawCentreString("TOTAL: " + String(dtotal) + " Litros", 120, 260, 1);
+    tft.drawCentreString("VAZAO: " + String(dvazao) + " L/Min", 120, 280, 1);
+    
+    //tft.drawCentreString("NIVEL AGUA: 100%", 120, 200, 2);
     
     
     xSemaphoreGive(xTft_semaphore);  
 
-     Serial.print("\nNIVEL: ");
-        Serial.print(dnivel);
-        Serial.print("\nCONSUMO: ");
-        Serial.print(dtotal);
-        Serial.print("\nVAZAO: ");
-        Serial.print(dvazao);
 
 
       vTaskDelay(pdMS_TO_TICKS(TIME_REFRESH_DISPLAY));
